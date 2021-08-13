@@ -2,20 +2,39 @@
 
 React Native wheel picker like iOS
 
+![](./example/demo.gif)
+
 ## Installation
 
 ```sh
 npm install react-native-wheel-picker-expo
 ```
+or
+```sh
+npm install react-native-wheel-picker-expo
+```
 
-## Usage
+## SampleCode
 
 ```js
-import WheelPickerExpo from "react-native-wheel-picker-expo";
+import React from 'react';
+import { WheelPickerSimple } from 'rn-wheel-picker-simple';
 
-// ...
+const CITIES = 'Jakarta,Bandung,Sumbawa,Taliwang,Lombok,Bima'.split(',');
 
-const result = await WheelPickerExpo.multiply(3, 7);
+function App() {
+    return (
+        <WheelPickerSimple
+          height={300}
+          width={150}
+          selectedBorderColor='red'
+          selectedBorderHeight={1}
+          initialSelectedIndex={3}
+          items={CITIES.map(name => ({ label: name, value: '' }))}
+          onChange={({ item }) => setCity(item.label)} />
+    );
+}
+
 ```
 
 ## Contributing
