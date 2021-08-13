@@ -1,0 +1,22 @@
+{
+  "name": "react-native-wheel-picker-expo-example",
+  "displayName": "WheelPickerExpo Example",
+  "expo": {
+    "name": "react-native-wheel-picker-expo-example",
+    "slug": "react-native-wheel-picker-expo-example",
+    "description": "Example app for react-native-wheel-picker-expo",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
