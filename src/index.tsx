@@ -1,5 +1,219 @@
-export default {
-  multiply(a: number, b: number) {
-    return Promise.resolve(a * b);
-  },
+import React, { PureComponent } from 'react';
+import {
+  FlatList,
+  Text,
+  StyleSheet,
+  View,
+  FlatListProps,
+  Platform,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+
+type ItemType = { label: string; value: string };
+type RenderItemProps = { fontSize: number; label: string };
+
+interface IViuPickerProps {
+  items: ItemType[];
+  onChange: (item: { index: number; item: ItemType }) => void;
+  initialSelectedIndex?: number;
+  height?: number;
+  width?: number;
+  flatListProps?: FlatListProps<ItemType>;
+  backgroundColor?: string;
+  selectedBorderColor?: string;
+  selectedBorderHeight?: number;
+  renderItem?: (props: RenderItemProps) => JSX.Element;
+}
+
+interface IViuPickerState {
+  selectedIndex: number;
+  itemHeight: number;
+  listHeight: number;
+  data: ItemType[];
+}
+
+const GRADIENT_COLOR = Platform.select({
+  ios: 'rgba( 255, 255, 255, .2 )',
+  android: 'rgba( 255, 255, 255, .4 )',
+}) as string;
+
+export default class ViuPicker extends PureComponent<
+  IViuPickerProps,
+  IViuPickerState
+> {
+  static defaultProps = {
+    items: [],
+    backgroundColor: '#FFF',
+    selectedBorderHeight: 0,
+    width: 100,
+  };
+
+  state = {
+    selectedIndex: 0,
+    itemHeight: 40,
+    listHeight: 200,
+    data: [],
+  };
+
+  componentDidUpdate(prevProps: IViuPickerProps) {
+    if (this.props.items !== prevProps.items) {
+      this.setData();
+    }
+  }
+
+  componentDidMount() {
+    this.setData();
+  }
+
+  handleOnSelect(index: number) {
+    const { items, onChange } = this.props;
+    const selectedIndex = Math.abs(index);
+
+    if (selectedIndex >= 0 && selectedIndex <= items.length - 1) {
+      this.setState({ selectedIndex });
+      onChange &&
+        onChange({ index: selectedIndex, item: items[selectedIndex] });
+    }
+  }
+
+  setData() {
+    let { itemHeight, listHeight } = this.state;
+    const { items, height } = this.props;
+
+    if (items?.length) {
+      const additionalItem = { label: '', value: null };
+      const data = [
+        additionalItem,
+        additionalItem,
+        ...items,
+        additionalItem,
+        additionalItem,
+      ] as ItemType[];
+
+      if (height) {
+        listHeight = height;
+        itemHeight = listHeight / 5;
+      }
+
+      this.setState({ data, itemHeight, listHeight });
+    }
+  }
+
+  render() {
+    const { data, itemHeight, listHeight, selectedIndex } = this.state;
+    const {
+      width,
+      initialSelectedIndex,
+      flatListProps,
+      backgroundColor = '',
+      selectedBorderColor,
+      selectedBorderHeight,
+    } = this.props;
+    const gradientContainerStyle = [
+      { height: 2 * itemHeight, borderColor: selectedBorderColor },
+      styles.gradientContainer,
+    ];
+
+    return (
+      <View style={{ height: listHeight, width, backgroundColor }}>
+        <FlatList
+          keyExtractor={(_, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          renderItem={(options) =>
+            PickerItem(
+              options,
+              selectedIndex,
+              {
+                ...styles.listItem,
+                fontSize: itemHeight / 2,
+                height: itemHeight,
+              },
+              this.props.renderItem as any
+            )
+          }
+          {...flatListProps}
+          initialScrollIndex={initialSelectedIndex}
+          data={data}
+          onScroll={(event) => {
+            let index = Math.round(
+              event.nativeEvent.contentOffset.y / itemHeight
+            );
+            this.handleOnSelect(index);
+          }}
+          getItemLayout={(_, index) => ({
+            length: itemHeight,
+            offset: index * itemHeight,
+            index,
+          })}
+          snapToInterval={itemHeight}
+        />
+        <View
+          style={[
+            gradientContainerStyle,
+            styles.topGradient,
+            { borderBottomWidth: selectedBorderHeight },
+          ]}
+          pointerEvents="none"
+        >
+          <LinearGradient
+            style={{ flex: 1 }}
+            colors={[backgroundColor, GRADIENT_COLOR]}
+          />
+        </View>
+        <View
+          style={[
+            gradientContainerStyle,
+            styles.bottomGradient,
+            { borderTopWidth: selectedBorderHeight },
+          ]}
+          pointerEvents="none"
+        >
+          <LinearGradient
+            style={{ flex: 1 }}
+            colors={[GRADIENT_COLOR, backgroundColor]}
+          />
+        </View>
+      </View>
+    );
+  }
+}
+
+const Item = React.memo(({ fontSize, label }: any) => {
+  return <Text style={{ fontSize }}>{label}</Text>;
+});
+
+const PickerItem = (
+  { item, index }: any,
+  indexSelected: number,
+  style: any,
+  renderItem: (props: RenderItemProps) => JSX.Element
+) => {
+  const gap = Math.abs(index - (indexSelected + 2));
+  const sizeText = [style.fontSize, style.fontSize / 1.5, style.fontSize / 2];
+
+  let fontSize = sizeText[gap];
+  if (gap > 1) {
+    fontSize = sizeText[2];
+  }
+
+  return (
+    <View style={style}>
+      {typeof renderItem === 'function' &&
+        renderItem({ fontSize, label: item.label })}
+      {!renderItem && <Item fontSize={fontSize} label={item.label} />}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  listItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  gradientContainer: {
+    position: 'absolute',
+    width: '100%',
+  },
+  topGradient: { top: 0 },
+  bottomGradient: { bottom: 0 },
+});
