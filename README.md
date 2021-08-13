@@ -14,7 +14,7 @@ or
 npm install react-native-wheel-picker-expo
 ```
 
-## SampleCode
+## Sample Code
 
 ```js
 import React from 'react';
