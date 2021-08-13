@@ -1,13 +1,13 @@
 # react-native-wheel-picker-expo
 
-React Native wheel picker like iOS
+React Native wheel picker like iOS without ejected Expo/CRNA
 
 ![](./example/demo.gif)
 
 ## Installation
 
 ```sh
-npm install react-native-wheel-picker-expo
+expo install react-native-wheel-picker-expo
 ```
 or
 ```sh
@@ -18,13 +18,13 @@ npm install react-native-wheel-picker-expo
 
 ```js
 import React from 'react';
-import { WheelPickerSimple } from 'rn-wheel-picker-simple';
+import WheelPickerExpo from 'react-native-wheel-picker-expo';
 
 const CITIES = 'Jakarta,Bandung,Sumbawa,Taliwang,Lombok,Bima'.split(',');
 
 function App() {
     return (
-        <WheelPickerSimple
+        <WheelPickerExpo
           height={300}
           width={150}
           selectedBorderColor='red'
