@@ -34,7 +34,10 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "picker",
+    "expo",
+    "wheel"
   ],
   "repository": "https://github.com/adityamr15/react-native-wheel-picker-expo",
   "author": "Aditya Meilaz Rahmanto <adityamr15@gmail.com> (https://github.com/adityamr15)",
