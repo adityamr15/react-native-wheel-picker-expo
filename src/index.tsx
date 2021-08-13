@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-type ItemType = { label: string; value: string };
+type ItemType = { label: string; value: any };
 type RenderItemProps = { fontSize: number; label: string };
 
 interface IViuPickerProps {
@@ -17,8 +17,8 @@ interface IViuPickerProps {
   onChange: (item: { index: number; item: ItemType }) => void;
   initialSelectedIndex?: number;
   height?: number;
-  width?: number;
-  flatListProps?: FlatListProps<ItemType>;
+  width?: any;
+  flatListProps?: Partial<FlatListProps<ItemType>>;
   backgroundColor?: string;
   selectedBorderColor?: string;
   selectedBorderHeight?: number;
@@ -37,15 +37,12 @@ const GRADIENT_COLOR = Platform.select({
   android: 'rgba( 255, 255, 255, .4 )',
 }) as string;
 
-export default class ViuPicker extends PureComponent<
-  IViuPickerProps,
-  IViuPickerState
-> {
+class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
   static defaultProps = {
     items: [],
     backgroundColor: '#FFF',
     selectedBorderHeight: 0,
-    width: 100,
+    width: 150,
   };
 
   state = {
@@ -56,7 +53,7 @@ export default class ViuPicker extends PureComponent<
   };
 
   componentDidUpdate(prevProps: IViuPickerProps) {
-    if (this.props.items !== prevProps.items) {
+    if (this.props.items?.length !== prevProps.items?.length) {
       this.setData();
     }
   }
@@ -156,7 +153,7 @@ export default class ViuPicker extends PureComponent<
           pointerEvents="none"
         >
           <LinearGradient
-            style={{ flex: 1 }}
+            style={styles.linearGradient}
             colors={[backgroundColor, GRADIENT_COLOR]}
           />
         </View>
@@ -169,7 +166,7 @@ export default class ViuPicker extends PureComponent<
           pointerEvents="none"
         >
           <LinearGradient
-            style={{ flex: 1 }}
+            style={styles.linearGradient}
             colors={[GRADIENT_COLOR, backgroundColor]}
           />
         </View>
@@ -214,6 +211,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
   },
+  linearGradient: { flex: 1 },
   topGradient: { top: 0 },
   bottomGradient: { bottom: 0 },
 });
+
+const WheelPickerExpo = ViuPicker;
+export default WheelPickerExpo;

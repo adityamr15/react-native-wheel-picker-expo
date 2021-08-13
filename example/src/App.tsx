@@ -20,7 +20,7 @@ export default function App() {
           items={PROVINCES.map((name) => ({ label: name, value: '' }))}
           onChange={({ item }) => setProvince(item.label)}
           renderItem={(props) => (
-            <Text style={{ fontWeight: 'bold', fontSize: props.fontSize }}>
+            <Text style={[styles.text, { fontSize: props.fontSize }]}>
               {props.label}
             </Text>
           )}
@@ -37,7 +37,7 @@ export default function App() {
         />
       </View>
 
-      <View style={[styles.container, { flexDirection: 'column' }]}>
+      <View style={styles.container2}>
         <Text>Selected Value:</Text>
         <Text style={styles.text}>{province}</Text>
         <Text style={styles.text}>{city}</Text>
@@ -50,6 +50,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container2: {
+    flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
