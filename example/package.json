@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "expo": "^40.0.0",
-    "expo-linear-gradient": "*",
+    "expo-linear-gradient": "~8.4.0",
     "expo-splash-screen": "~0.8.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",

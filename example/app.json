@@ -17,6 +17,7 @@
     },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "githubUrl": "https://github.com/adityamr15/react-native-wheel-picker-expo"
   }
 }
