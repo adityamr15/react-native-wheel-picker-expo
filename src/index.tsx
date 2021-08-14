@@ -6,6 +6,7 @@ import {
   View,
   FlatListProps,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -45,6 +46,8 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
     width: 150,
   };
 
+  flatListRef = React.createRef<FlatList>();
+
   state = {
     selectedIndex: 0,
     itemHeight: 40,
@@ -72,6 +75,15 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
         onChange({ index: selectedIndex, item: items[selectedIndex] });
     }
   }
+
+  handleOnPressItem = (index: number) => {
+    if (index >= 0 && index <= this.props.items.length - 1) {
+      this.flatListRef.current?.scrollToIndex({
+        animated: true,
+        index: index,
+      });
+    }
+  };
 
   setData() {
     let { itemHeight, listHeight } = this.state;
@@ -125,10 +137,12 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
                 fontSize: itemHeight / 2,
                 height: itemHeight,
               },
+              this.handleOnPressItem,
               this.props.renderItem as any
             )
           }
           {...flatListProps}
+          ref={this.flatListRef}
           initialScrollIndex={initialSelectedIndex}
           data={data}
           onScroll={(event) => {
@@ -183,6 +197,7 @@ const PickerItem = (
   { item, index }: any,
   indexSelected: number,
   style: any,
+  onPress: (index: number) => void,
   renderItem: (props: RenderItemProps) => JSX.Element
 ) => {
   const gap = Math.abs(index - (indexSelected + 2));
@@ -194,11 +209,13 @@ const PickerItem = (
   }
 
   return (
-    <View style={style}>
-      {typeof renderItem === 'function' &&
-        renderItem({ fontSize, label: item.label })}
-      {!renderItem && <Item fontSize={fontSize} label={item.label} />}
-    </View>
+    <TouchableOpacity activeOpacity={1} onPress={() => onPress(index - 2)}>
+      <View style={style}>
+        {typeof renderItem === 'function' &&
+          renderItem({ fontSize, label: item.label })}
+        {!renderItem && <Item fontSize={fontSize} label={item.label} />}
+      </View>
+    </TouchableOpacity>
   );
 };
 
