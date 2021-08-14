@@ -4,6 +4,9 @@ React Native wheel picker like iOS without ejected Expo/CRNA
 
 ![](./example/demo.gif)
 
+#### Demo with [Expo](https://expo.dev/@adityamr15/react-native-wheel-picker-expo-example)
+![](./example/expo-demo.png)
+
 ## Installation
 
 ```sh
