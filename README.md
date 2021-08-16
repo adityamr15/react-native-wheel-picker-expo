@@ -1,5 +1,5 @@
 # react-native-wheel-picker-expo
-![npm](https://img.shields.io/npm/v/react-native-wheel-picker-expo?label=version&style=flat-square)
+![npm](https://img.shields.io/npm/v/react-native-wheel-picker-expo?style=flat-square&logo=npm)
 ![npm](https://img.shields.io/npm/dt/react-native-wheel-picker-expo?color=4caf50&logo=react-native-wheel-picker-expo&style=flat-square)
 ![npm type definitions](https://img.shields.io/npm/types/react-native-wheel-picker-expo?style=flat-square)
 
@@ -40,6 +40,20 @@ function App() {
 }
 
 ```
+
+
+## Props
+| Prop | Default | Type | Description |
+| :--- | :---: | :---: | :--- |
+| items | `Array` | `Array<ItemType>` | Data that will be rendered as options |
+| onChange | `-` | `({index, item}) => void` | Function will send `item` and `index` option selected |
+| initialSelectedIndex | `-` | `number` | Inital index will be selected |
+| height | `200` | `number` | Style height for container |
+| width | `150` | `number` | Style width for container |
+| flatListProps | `-` | `FlatListProps<ItemType>` | Props of FlatList |
+| backgroundColor | `#FFFFFF` | `string` | For best result this is necessary if background is not white. `Note:` Only accept `hexcolor` and have 7 length of string. Ex: `#F00F00` |
+| selectedStyle | `-` | `{ borderColor: string; borderWidth: number }` | Style for selected item |
+| renderItem | `-` | `(props: RenderItemProps) => JSX.Element` |Return JSX Element to override the items |
 
 ## Contributing
 
