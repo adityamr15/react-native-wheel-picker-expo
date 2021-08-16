@@ -17,7 +17,7 @@ export interface IViuPickerProps {
   backgroundColor?: string;
   selectedStyle?: {
     borderColor?: string;
-    borderWidth: number;
+    borderHeight: number;
   };
   renderItem?: (props: RenderItemProps) => JSX.Element;
 }
