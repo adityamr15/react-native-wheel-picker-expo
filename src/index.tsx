@@ -4,49 +4,28 @@ import {
   Text,
   StyleSheet,
   View,
-  FlatListProps,
   Platform,
   TouchableOpacity,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
-type ItemType = { label: string; value: any };
-type RenderItemProps = { fontSize: number; label: string };
-
-interface IViuPickerProps {
-  items: ItemType[];
-  onChange: (item: { index: number; item: ItemType }) => void;
-  initialSelectedIndex?: number;
-  height?: number;
-  width?: any;
-  flatListProps?: Partial<FlatListProps<ItemType>>;
-  backgroundColor?: string;
-  selectedBorderColor?: string;
-  selectedBorderHeight?: number;
-  renderItem?: (props: RenderItemProps) => JSX.Element;
-}
-
-interface IViuPickerState {
-  selectedIndex: number;
-  itemHeight: number;
-  listHeight: number;
-  data: ItemType[];
-}
-
-const GRADIENT_COLOR = Platform.select({
-  ios: 'rgba( 255, 255, 255, .2 )',
-  android: 'rgba( 255, 255, 255, .4 )',
-}) as string;
+import { adaptiveColor, setAlphaColor } from './util';
+import type {
+  ItemType,
+  IViuPickerProps,
+  IViuPickerState,
+  RenderItemProps,
+} from './types';
 
 class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
   static defaultProps = {
     items: [],
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFFFFF',
     selectedBorderHeight: 0,
     width: 150,
   };
 
   flatListRef = React.createRef<FlatList>();
+  backgroundColor = setAlphaColor(this.props.backgroundColor as any, 1);
 
   state = {
     selectedIndex: 0,
@@ -63,6 +42,13 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
 
   componentDidMount() {
     this.setData();
+  }
+
+  get gradientColor(): string {
+    return Platform.select({
+      ios: setAlphaColor(this.backgroundColor, 0.2),
+      android: setAlphaColor(this.backgroundColor, 0.4),
+    }) as string;
   }
 
   handleOnSelect(index: number) {
@@ -110,21 +96,21 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
 
   render() {
     const { data, itemHeight, listHeight, selectedIndex } = this.state;
-    const {
-      width,
-      initialSelectedIndex,
-      flatListProps,
-      backgroundColor = '',
-      selectedBorderColor,
-      selectedBorderHeight,
-    } = this.props;
+    const { width, initialSelectedIndex, flatListProps, selectedStyle } =
+      this.props;
     const gradientContainerStyle = [
-      { height: 2 * itemHeight, borderColor: selectedBorderColor },
+      { height: 2 * itemHeight, borderColor: selectedStyle?.borderColor },
       styles.gradientContainer,
     ];
 
     return (
-      <View style={{ height: listHeight, width, backgroundColor }}>
+      <View
+        style={{
+          height: listHeight,
+          width,
+          backgroundColor: this.backgroundColor,
+        }}
+      >
         <FlatList
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
@@ -134,6 +120,7 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
               selectedIndex,
               {
                 ...styles.listItem,
+                backgroundColor: this.backgroundColor,
                 fontSize: itemHeight / 2,
                 height: itemHeight,
               },
@@ -162,26 +149,26 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
           style={[
             gradientContainerStyle,
             styles.topGradient,
-            { borderBottomWidth: selectedBorderHeight },
+            { borderBottomWidth: selectedStyle?.borderWidth },
           ]}
           pointerEvents="none"
         >
           <LinearGradient
             style={styles.linearGradient}
-            colors={[backgroundColor, GRADIENT_COLOR]}
+            colors={[this.backgroundColor, this.gradientColor]}
           />
         </View>
         <View
           style={[
             gradientContainerStyle,
             styles.bottomGradient,
-            { borderTopWidth: selectedBorderHeight },
+            { borderTopWidth: selectedStyle?.borderWidth },
           ]}
           pointerEvents="none"
         >
           <LinearGradient
             style={styles.linearGradient}
-            colors={[GRADIENT_COLOR, backgroundColor]}
+            colors={[this.gradientColor, this.backgroundColor]}
           />
         </View>
       </View>
@@ -189,9 +176,9 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
   }
 }
 
-const Item = React.memo(({ fontSize, label }: any) => {
-  return <Text style={{ fontSize }}>{label}</Text>;
-});
+const Item = React.memo(({ fontSize, label, fontColor }: RenderItemProps) => (
+  <Text style={{ fontSize, color: fontColor }}>{label}</Text>
+));
 
 const PickerItem = (
   { item, index }: any,
@@ -203,17 +190,17 @@ const PickerItem = (
   const gap = Math.abs(index - (indexSelected + 2));
   const sizeText = [style.fontSize, style.fontSize / 1.5, style.fontSize / 2];
 
-  let fontSize = sizeText[gap];
-  if (gap > 1) {
-    fontSize = sizeText[2];
-  }
+  const fontSize = gap > 1 ? sizeText[2] : sizeText[gap];
+  const fontColor = adaptiveColor(style.backgroundColor);
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => onPress(index - 2)}>
       <View style={style}>
         {typeof renderItem === 'function' &&
-          renderItem({ fontSize, label: item.label })}
-        {!renderItem && <Item fontSize={fontSize} label={item.label} />}
+          renderItem({ fontSize, fontColor, label: item.label })}
+        {!renderItem && (
+          <Item fontSize={fontSize} fontColor={fontColor} label={item.label} />
+        )}
       </View>
     </TouchableOpacity>
   );
