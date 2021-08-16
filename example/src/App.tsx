@@ -17,7 +17,6 @@ export default function App() {
           backgroundColor="#F00F00"
           selectedStyle={styles.selectedStyle1}
           height={300}
-          selectedBorderHeight={2}
           initialSelectedIndex={1}
           items={PROVINCES.map((name) => ({ label: name, value: '' }))}
           onChange={({ item }) => setProvince(item.label)}
@@ -38,7 +37,6 @@ export default function App() {
           selectedStyle={styles.selectedStyle2}
           height={300}
           width={150}
-          selectedBorderHeight={2}
           initialSelectedIndex={3}
           items={CITIES.map((name) => ({ label: name, value: '' }))}
           onChange={({ item }) => setCity(item.label)}
