@@ -1,4 +1,7 @@
 # react-native-wheel-picker-expo
+![npm](https://img.shields.io/npm/v/react-native-wheel-picker-expo?label=version&style=flat-square)
+![npm](https://img.shields.io/npm/dt/react-native-wheel-picker-expo?color=4caf50&logo=react-native-wheel-picker-expo&style=flat-square)
+![npm type definitions](https://img.shields.io/npm/types/react-native-wheel-picker-expo?style=flat-square)
 
 React Native wheel picker like iOS without ejected Expo/CRNA
 
