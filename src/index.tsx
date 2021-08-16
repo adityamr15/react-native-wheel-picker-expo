@@ -20,7 +20,6 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
   static defaultProps = {
     items: [],
     backgroundColor: '#FFFFFF',
-    selectedBorderHeight: 0,
     width: 150,
   };
 
