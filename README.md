@@ -33,8 +33,6 @@ function App() {
         <WheelPickerExpo
           height={300}
           width={150}
-          selectedBorderColor='red'
-          selectedBorderHeight={1}
           initialSelectedIndex={3}
           items={CITIES.map(name => ({ label: name, value: '' }))}
           onChange={({ item }) => setCity(item.label)} />
