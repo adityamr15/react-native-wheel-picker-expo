@@ -148,7 +148,7 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
           style={[
             gradientContainerStyle,
             styles.topGradient,
-            { borderBottomWidth: selectedStyle?.borderHeight },
+            { borderBottomWidth: selectedStyle?.borderWidth },
           ]}
           pointerEvents="none"
         >
@@ -161,7 +161,7 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
           style={[
             gradientContainerStyle,
             styles.bottomGradient,
-            { borderTopWidth: selectedStyle?.borderHeight },
+            { borderTopWidth: selectedStyle?.borderWidth },
           ]}
           pointerEvents="none"
         >

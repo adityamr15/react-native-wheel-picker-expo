@@ -71,6 +71,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  selectedStyle1: { borderColor: '#202124', borderHeight: 2 },
-  selectedStyle2: { borderColor: '#F00F00', borderHeight: 2 },
+  selectedStyle1: { borderColor: '#202124', borderWidth: 2 },
+  selectedStyle2: { borderColor: '#F00F00', borderWidth: 2 },
 });
