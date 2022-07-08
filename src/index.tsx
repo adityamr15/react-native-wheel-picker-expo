@@ -35,7 +35,8 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
     data: [],
   };
 
-  userScrolling = false;
+  userTouch = false;
+  momentumScrolling = false;
 
   componentDidUpdate(prevProps: IViuPickerProps) {
     if (this.props.items?.length !== prevProps.items?.length) {
@@ -61,7 +62,7 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
     if (selectedIndex >= 0 && selectedIndex <= items.length - 1) {
       if (
         haptics &&
-        this.userScrolling &&
+        (this.userTouch || this.momentumScrolling) &&
         this.state.selectedIndex !== selectedIndex
       ) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -155,8 +156,10 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
             index,
           })}
           snapToInterval={itemHeight}
-          onScrollBeginDrag={() => (this.userScrolling = true)}
-          onMomentumScrollEnd={() => (this.userScrolling = false)}
+          onTouchStart={() => (this.userTouch = true)}
+          onTouchEnd={() => (this.userTouch = false)}
+          onMomentumScrollBegin={() => (this.momentumScrolling = true)}
+          onMomentumScrollEnd={() => (this.momentumScrolling = false)}
         />
         <View
           style={[
