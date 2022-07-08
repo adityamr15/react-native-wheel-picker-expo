@@ -30,6 +30,7 @@ export default function App() {
               {props.label}
             </Text>
           )}
+          onChangeEnd={({ item }) => console.log('Province.onChangeEnd', item)}
         />
 
         <WheelPickerExpo
@@ -40,6 +41,7 @@ export default function App() {
           initialSelectedIndex={3}
           items={CITIES.map((name) => ({ label: name, value: '' }))}
           onChange={({ item }) => setCity(item.label)}
+          onChangeEnd={({ item }) => console.log('City.onChangeEnd', item)}
         />
       </View>
 

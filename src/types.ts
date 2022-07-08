@@ -9,7 +9,8 @@ export type RenderItemProps = {
 
 export interface IViuPickerProps {
   items: ItemType[];
-  onChange: (item: { index: number; item: ItemType }) => void;
+  onChange?: (item: { index: number; item: ItemType }) => void;
+  onChangeEnd?: (item: { index: number; item: ItemType }) => void;
   initialSelectedIndex?: number;
   height?: number;
   width?: any;

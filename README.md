@@ -46,7 +46,8 @@ function App() {
 | Prop | Default | Type | Description |
 | :--- | :---: | :---: | :--- |
 | items | `Array` | `Array<ItemType>` | Data that will be rendered as options |
-| onChange | `-` | `({index, item}) => void` | Function will send `item` and `index` option selected |
+| onChange | `-` | `({index, item}) => void` | Function will be called during scrolling |
+| onChangeEnd | `-` | `({index, item}) => void` | Function will be called after scroll end |
 | initialSelectedIndex | `-` | `number` | Inital index will be selected |
 | height | `200` | `number` | Style height for container |
 | width | `150` | `number` | Style width for container |

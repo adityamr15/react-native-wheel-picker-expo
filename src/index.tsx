@@ -143,6 +143,13 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
             index,
           })}
           snapToInterval={itemHeight}
+          onMomentumScrollEnd={() => {
+            const { items, onChangeEnd } = this.props;
+            if (onChangeEnd) {
+              const { selectedIndex } = this.state;
+              onChangeEnd({ index: selectedIndex, item: items[selectedIndex] });
+            }
+          }}
         />
         <View
           style={[
