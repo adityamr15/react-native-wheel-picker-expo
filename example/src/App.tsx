@@ -40,6 +40,7 @@ export default function App() {
           initialSelectedIndex={3}
           items={CITIES.map((name) => ({ label: name, value: '' }))}
           onChange={({ item }) => setCity(item.label)}
+          haptics={true}
         />
       </View>
 

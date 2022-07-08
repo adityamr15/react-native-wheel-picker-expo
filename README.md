@@ -54,6 +54,7 @@ function App() {
 | backgroundColor | `#FFFFFF` | `string` | For best result this is necessary if background is not white. `Note:` Only accept `hexcolor` and have 7 length of string. Ex: `#F00F00` |
 | selectedStyle | `-` | `{ borderColor: string; borderWidth: number }` | Style for selected item |
 | renderItem | `-` | `(props: RenderItemProps) => JSX.Element` |Return JSX Element to override the items |
+| haptics | false | `boolean` |Enable haptic feedback |
 
 ## Contributing
 

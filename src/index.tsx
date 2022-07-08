@@ -15,12 +15,14 @@ import type {
   IViuPickerState,
   RenderItemProps,
 } from './types';
+import * as Haptics from 'expo-haptics';
 
 class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
   static defaultProps = {
     items: [],
     backgroundColor: '#FFFFFF',
     width: 150,
+    haptics: false,
   };
 
   flatListRef = React.createRef<FlatList>();
@@ -51,10 +53,14 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
   }
 
   handleOnSelect(index: number) {
-    const { items, onChange } = this.props;
+    const { items, onChange, haptics } = this.props;
     const selectedIndex = Math.abs(index);
 
     if (selectedIndex >= 0 && selectedIndex <= items.length - 1) {
+      if (haptics && this.state.selectedIndex != selectedIndex) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
+
       this.setState({ selectedIndex });
       onChange &&
         onChange({ index: selectedIndex, item: items[selectedIndex] });
