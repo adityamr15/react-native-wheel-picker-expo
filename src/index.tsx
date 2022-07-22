@@ -17,7 +17,7 @@ import type {
 } from './types';
 import * as Haptics from 'expo-haptics';
 
-class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
+class WheelPickerExpo extends PureComponent<IViuPickerProps, IViuPickerState> {
   static defaultProps = {
     items: [],
     backgroundColor: '#FFFFFF',
@@ -236,5 +236,4 @@ const styles = StyleSheet.create({
   bottomGradient: { bottom: 0 },
 });
 
-const WheelPickerExpo = ViuPicker;
 export default WheelPickerExpo;
