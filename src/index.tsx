@@ -36,7 +36,6 @@ class WheelPickerExpo extends PureComponent<IViuPickerProps, IViuPickerState> {
   };
 
   userTouch = false;
-  momentumScrolling = false;
 
   componentDidUpdate(prevProps: IViuPickerProps) {
     if (this.props.items?.length !== prevProps.items?.length) {
@@ -62,7 +61,7 @@ class WheelPickerExpo extends PureComponent<IViuPickerProps, IViuPickerState> {
     if (selectedIndex >= 0 && selectedIndex <= items.length - 1) {
       if (
         haptics &&
-        (this.userTouch || this.momentumScrolling) &&
+        this.userTouch &&
         this.state.selectedIndex !== selectedIndex
       ) {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -140,11 +139,11 @@ class WheelPickerExpo extends PureComponent<IViuPickerProps, IViuPickerState> {
               this.props.renderItem as any
             )
           }
-          onTouchStart={() => (this.userTouch = true)}
-          onTouchEnd={() => (this.userTouch = false)}
-          onMomentumScrollBegin={() => (this.momentumScrolling = true)}
-          onMomentumScrollEnd={() => (this.momentumScrolling = false)}
           {...flatListProps}
+          onTouchStart={(e) => {
+            this.userTouch = true;
+            !!flatListProps?.onTouchStart && flatListProps.onTouchStart(e);
+          }}
           ref={this.flatListRef}
           initialScrollIndex={initialSelectedIndex}
           data={data}
