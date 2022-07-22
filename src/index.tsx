@@ -140,6 +140,10 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
               this.props.renderItem as any
             )
           }
+          onTouchStart={() => (this.userTouch = true)}
+          onTouchEnd={() => (this.userTouch = false)}
+          onMomentumScrollBegin={() => (this.momentumScrolling = true)}
+          onMomentumScrollEnd={() => (this.momentumScrolling = false)}
           {...flatListProps}
           ref={this.flatListRef}
           initialScrollIndex={initialSelectedIndex}
@@ -156,10 +160,6 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
             index,
           })}
           snapToInterval={itemHeight}
-          onTouchStart={() => (this.userTouch = true)}
-          onTouchEnd={() => (this.userTouch = false)}
-          onMomentumScrollBegin={() => (this.momentumScrolling = true)}
-          onMomentumScrollEnd={() => (this.momentumScrolling = false)}
         />
         <View
           style={[
