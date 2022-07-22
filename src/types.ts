@@ -20,6 +20,7 @@ export interface IViuPickerProps {
     borderWidth?: number;
   };
   renderItem?: (props: RenderItemProps) => JSX.Element;
+  haptics?: boolean;
 }
 
 export interface IViuPickerState {

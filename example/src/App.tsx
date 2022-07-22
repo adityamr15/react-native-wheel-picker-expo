@@ -9,11 +9,13 @@ const CITIES = 'Jakarta,Bandung,Sumbawa,Taliwang,Lombok,Bima'.split(',');
 export default function App() {
   const [province, setProvince] = React.useState('');
   const [city, setCity] = React.useState('');
+  const wheelRef = React.useRef<WheelPickerExpo>(null);
 
   return (
     <>
       <View style={styles.container}>
         <WheelPickerExpo
+          ref={wheelRef}
           backgroundColor="#F00F00"
           selectedStyle={styles.selectedStyle1}
           height={300}
@@ -40,6 +42,7 @@ export default function App() {
           initialSelectedIndex={3}
           items={CITIES.map((name) => ({ label: name, value: '' }))}
           onChange={({ item }) => setCity(item.label)}
+          haptics={true}
         />
       </View>
 

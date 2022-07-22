@@ -15,12 +15,14 @@ import type {
   IViuPickerState,
   RenderItemProps,
 } from './types';
+import * as Haptics from 'expo-haptics';
 
-class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
+class WheelPickerExpo extends PureComponent<IViuPickerProps, IViuPickerState> {
   static defaultProps = {
     items: [],
     backgroundColor: '#FFFFFF',
     width: 150,
+    haptics: false,
   };
 
   flatListRef = React.createRef<FlatList>();
@@ -32,6 +34,9 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
     listHeight: 200,
     data: [],
   };
+
+  userTouch = false;
+  momentumScrolling = false;
 
   componentDidUpdate(prevProps: IViuPickerProps) {
     if (this.props.items?.length !== prevProps.items?.length) {
@@ -51,10 +56,18 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
   }
 
   handleOnSelect(index: number) {
-    const { items, onChange } = this.props;
+    const { items, onChange, haptics } = this.props;
     const selectedIndex = Math.abs(index);
 
     if (selectedIndex >= 0 && selectedIndex <= items.length - 1) {
+      if (
+        haptics &&
+        (this.userTouch || this.momentumScrolling) &&
+        this.state.selectedIndex !== selectedIndex
+      ) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
+
       this.setState({ selectedIndex });
       onChange &&
         onChange({ index: selectedIndex, item: items[selectedIndex] });
@@ -127,6 +140,10 @@ class ViuPicker extends PureComponent<IViuPickerProps, IViuPickerState> {
               this.props.renderItem as any
             )
           }
+          onTouchStart={() => (this.userTouch = true)}
+          onTouchEnd={() => (this.userTouch = false)}
+          onMomentumScrollBegin={() => (this.momentumScrolling = true)}
+          onMomentumScrollEnd={() => (this.momentumScrolling = false)}
           {...flatListProps}
           ref={this.flatListRef}
           initialScrollIndex={initialSelectedIndex}
@@ -219,5 +236,4 @@ const styles = StyleSheet.create({
   bottomGradient: { bottom: 0 },
 });
 
-const WheelPickerExpo = ViuPicker;
 export default WheelPickerExpo;
