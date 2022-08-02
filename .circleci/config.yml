@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/node:15
+      - image: cimg/node:14.20
     working_directory: ~/project
 
 commands:
