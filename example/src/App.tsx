@@ -6,6 +6,8 @@ import WheelPickerExpo from 'react-native-wheel-picker-expo';
 const PROVINCES = 'DKI,NTB,JABAR,JATIM'.split(',');
 const CITIES = 'Jakarta,Bandung,Sumbawa,Taliwang,Lombok,Bima'.split(',');
 
+/* eslint-disable react-native/no-inline-styles */
+
 export default function App() {
   const [province, setProvince] = React.useState('');
   const [city, setCity] = React.useState('');
@@ -17,7 +19,7 @@ export default function App() {
         <WheelPickerExpo
           ref={wheelRef}
           backgroundColor="#F00F00"
-          selectedStyle={styles.selectedStyle1}
+          selectedStyle={{ borderColor: '#202124', borderWidth: 2 }}
           height={300}
           initialSelectedIndex={1}
           items={PROVINCES.map((name) => ({ label: name, value: '' }))}
@@ -26,7 +28,11 @@ export default function App() {
             <Text
               style={[
                 styles.text,
-                { fontSize: props.fontSize, color: props.fontColor },
+                {
+                  fontSize: props.fontSize,
+                  color: props.fontColor,
+                  textAlign: props.textAlign,
+                },
               ]}
             >
               {props.label}
@@ -36,7 +42,7 @@ export default function App() {
 
         <WheelPickerExpo
           backgroundColor="#202124"
-          selectedStyle={styles.selectedStyle2}
+          selectedStyle={{ borderColor: '#F00F00', borderWidth: 2 }}
           height={300}
           width={150}
           initialSelectedIndex={3}
@@ -74,6 +80,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  selectedStyle1: { borderColor: '#202124', borderWidth: 2 },
-  selectedStyle2: { borderColor: '#F00F00', borderWidth: 2 },
 });

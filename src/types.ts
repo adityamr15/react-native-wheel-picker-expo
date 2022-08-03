@@ -5,6 +5,7 @@ export type RenderItemProps = {
   fontSize: number;
   label: string;
   fontColor: string;
+  textAlign: 'center' | 'auto' | 'left' | 'right' | 'justify';
 };
 
 export interface IViuPickerProps {
