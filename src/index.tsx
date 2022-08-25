@@ -132,6 +132,7 @@ class WheelPickerExpo extends PureComponent<IViuPickerProps, IViuPickerState> {
         <FlatList
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}
           renderItem={(options) =>
             PickerItem(
               options,
