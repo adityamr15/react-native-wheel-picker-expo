@@ -121,6 +121,8 @@ class WheelPickerExpo extends PureComponent<IViuPickerProps, IViuPickerState> {
     const { width, initialSelectedIndex, flatListProps, selectedStyle } =
       this.props;
 
+    if (!data.length) return;
+
     return (
       <View
         style={{

@@ -12,21 +12,21 @@
     "test": "jest"
   },
   "dependencies": {
-    "expo": "^43.0.0",
-    "expo-haptics": "~11.0.3",
-    "expo-linear-gradient": "~10.0.3",
-    "expo-splash-screen": "~0.13.5",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-native": "0.64.3",
+    "expo": "^48.0.0",
+    "expo-haptics": "~12.2.1",
+    "expo-linear-gradient": "~12.1.2",
+    "expo-modules-core": "^1.2.6",
+    "expo-splash-screen": "~0.18.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.71.4",
     "react-native-unimodules": "~0.15.0",
-    "react-native-web": "0.17.1"
+    "react-native-web": "~0.18.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
+    "@babel/core": "^7.20.0",
     "@babel/runtime": "^7.9.6",
     "babel-plugin-module-resolver": "^4.0.0",
-    "babel-preset-expo": "8.5.1",
-    "expo-cli": "^4.0.13"
+    "babel-preset-expo": "^9.3.0"
   }
 }
